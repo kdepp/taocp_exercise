@@ -1,19 +1,25 @@
 // Õÿ∆ÀÀ„∑®
 
-var top = function (n, partial_order_list) {
+var top = function (partial_order_list) {
 	var ret = []
 		, rec = {}
 		, zero = []
-		, next = 0
-		, i, len;
+		, n = 0
+		, i, j, len, key;
 
-	for (i = 1; i <= n; i += 1) {
-		rec[i] = {
-			id: i
-			, clear: false
-			, cnt: 0
-			, tail: []
-		};
+	for (i = 0, len = partial_order_list.length; i < len; i += 1) {
+		var p = partial_order_list[i];
+
+		for (j = 0; j < 2; j += 1) {
+			if (!rec[p[j]]) {
+				rec[p[j]] = {
+					id: p[j]
+					, clear: false
+					, cnt: 0
+					, tail: []
+				};
+			}
+		}
 	}
 
 	for (i = 0, len = partial_order_list.length; i < len; i += 1) {
@@ -23,9 +29,11 @@ var top = function (n, partial_order_list) {
 		rec[p[1]].cnt += 1;
 	}
 
-	for (i = 1; i <=n; i += 1) {
-		if (rec[i].cnt == 0) {
-			zero.push(i);
+	for (key in rec) {
+		n += 1;
+
+		if (rec[key].cnt == 0) {
+			zero.push(key);
 		}
 	}
 
@@ -74,4 +82,4 @@ list = [
 	, [2, 8]
 ];
 
-console.log(top(9, list));
+console.log(top(list));
